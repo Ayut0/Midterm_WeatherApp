@@ -1,7 +1,6 @@
 # Midterm_WeatherApp
  School midterm assignment. Simple weather app.
 
-
 ## Requirements
 1. These are the requirements that are mandatory for this project:
 2. Follow wireframe to create the structure of your page for desktop and mobile. It is up to you how to design, include images and icons in the project.
