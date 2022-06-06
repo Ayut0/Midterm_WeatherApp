@@ -9,3 +9,5 @@
 
 #Ignore node_module folder
 node_modules
+
+scripts/fivedays1.js
