@@ -11,5 +11,5 @@
 node_modules
 
 scripts/currentWeather1.js
-scripts/fivedays1.js
+scripts/forecast.js
 scripts/key.js
