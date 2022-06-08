@@ -9,22 +9,37 @@ async function getForecastAPI () {
      const forecastObj = await responseForecast.json();
      console.log(forecastObj);
      
-     let mainTag = document.querySelector("main");
+     let fivedaysDIV = document.querySelector(".fivedays");
+
      for (let i = 0; i < 5; i++) {
-      let tempInt = Math.floor(forecastObj.list[i].main.temp);
+       //Variables (for date)
+      let monthOfTens = forecastObj.list[i].dt_txt[5];
+      let monthOfOnes = forecastObj.list[i].dt_txt[6];
+      let mm = monthOfTens + monthOfOnes;
+      let dateOfTens  = forecastObj.list[i].dt_txt[8];
+      let dateOfOnes  = forecastObj.list[i].dt_txt[9];
+      let dd = dateOfTens + dateOfOnes;
+
+      //Variables (for temp)
+      let tempInt  = Math.floor(forecastObj.list[i].main.temp);
+      let tempIntH = Math.floor(forecastObj.list[i].main.temp_max);
+      let tempIntL = Math.floor(forecastObj.list[i].main.temp_min);
+
       //Day
       const d = new Date(forecastObj.list[i].dt_txt);
       let day = weekday[d.getDay()];
-      //  console.log(day);
-
-       mainTag.innerHTML += 
+      
+       fivedaysDIV.innerHTML += 
         `
-        <div class="fiveDays__day">${day}</div>
-        <img class="fiveDays__img" src="#">
-        <div class="fiveDays__temp">${tempInt}°</div>
-        <div class="fiveDays__wrapper__highLow">
-         <div class="fiveDays__wrapper__highLow__h">H: ${forecastObj.list[i].main.temp_max}°</div>
-         <div class="fiveDays__wrapper__highLow__h">L: ${forecastObj.list[0].main.temp_min}°</div>
+        <div class="fivedays__card">
+          <div class="fivedays__card__date">${mm}/${dd}</div>
+          <div class="fivedays__card__day">${day}</div>
+          <img class="fivedays__card__img" src="#">
+          <div class="fivedays__card__temp">${tempInt}°</div>
+          <div class="fivedays__card__wrapper__highLow">
+            <div class="fivedays__card__wrapper__highLow__h">H: ${tempIntH}°</div>
+            <div class="fivedays__card__wrapper__highLow__h">L: ${tempIntL}°</div>
+          </div>
         </div>
         `
      }
@@ -41,6 +56,7 @@ getForecastAPI();
 
 
 // 5days forecast
+// - Date (added)
 // - Day
 // - Icon
 // - Temp
