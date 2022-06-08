@@ -11,7 +11,7 @@ async function getForecastAPI () {
      
      let fivedaysDIV = document.querySelector(".fivedays");
 
-     for (let i = 0; i < 5; i++) {
+     for (let i = 0; i < forecastObj.list.length; i+=8) {
        //Variables (for date)
       let monthOfTens = forecastObj.list[i].dt_txt[5];
       let monthOfOnes = forecastObj.list[i].dt_txt[6];
