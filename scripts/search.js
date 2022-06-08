@@ -22,8 +22,24 @@ function onPlaceChanged() {
     return cityName = place.name.split(',')[0];
 }
 
+// const createDropDown = () =>{
+//     return `
+//         <select>
+//             <option>a</option>
+//             <option>b</option>
+//             <option>c</option>
+//         </select>
+//     `
+// }
+
+let favItems = [];
+
 favoriteBtn.addEventListener("click", ()=>{
     onPlaceChanged();
-    localStorage.setItem("entry_list", JSON.stringify(onPlaceChanged()));
+    favItems.push(onPlaceChanged());
+    localStorage.setItem("entry_list", JSON.stringify(favItems));
 })
+
+let fav = window.localStorage.getItem("entry_list");
+console.log(fav, localStorage.length);
 
