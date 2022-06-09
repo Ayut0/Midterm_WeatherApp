@@ -2,6 +2,7 @@
 let autocomplete;
 let cityName;
 let favItems = [];
+let deleteBtn = document.querySelectorAll("#deleteBtn");
 const key = "Favorite countries"
 const favoriteBtn = document.querySelector("#favBtn");
 const section = document.querySelector("#dropDown");
@@ -25,7 +26,7 @@ function initAutoComplete() {
 //Get city name
 function onPlaceChanged() {
     let place = autocomplete.getPlace();
-    // console.log(place.name.split(',')[0]);
+
     return cityName = place.name.split(',')[0];
 }
 
@@ -35,7 +36,7 @@ function createDropDown(cityArray) {
   let cities = "";
   cityArray.forEach((element) => {
     cities += `
-                <option value=${element}>${element}</option>
+                <option style="display: flex; justify-content: flex-around;" value=${element}>${element} <div id="deleteBtn">delete</div> </option>
         `;
   });
   return cities;
@@ -43,10 +44,14 @@ function createDropDown(cityArray) {
 createDropDown(parsed);
 section.innerHTML = createDropDown(parsed);
 
+//click event to add
 favoriteBtn.addEventListener("click", ()=>{
     onPlaceChanged();
     console.log(favItems);
     console.log(parsed);
+    if(parsed.some(element)){
+        onPlaceChanged() === element
+    }
     favItems.push(onPlaceChanged());
     parsed.push(onPlaceChanged());
     let json = JSON.stringify(parsed);
@@ -56,4 +61,8 @@ favoriteBtn.addEventListener("click", ()=>{
     section.innerHTML = createDropDown(parsed);
 });
 
+//Delete
+function deleteItem (){
+    
 
+}
