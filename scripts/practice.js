@@ -27,13 +27,19 @@ function initAutoComplete() {
 //Get city name
 function onPlaceChanged() {
   let place = autocomplete.getPlace();
+  cityName = place.name.split(",")[0];
 
-  return (cityName = place.name.split(",")[0]);
+  console.log(cityName);
+  return cityName;
 }
+
 
 //create a drop menu options
 function createDropDown(cityArray) {
   let cities = "";
+  if(cityArray === null){
+    cityArray = [];
+  }
   cityArray.forEach((element) => {
     cities += `
                 <option style="display: flex; justify-content: flex-around;" value=${element}>${element} <div id="deleteBtn">delete</div> </option>
@@ -46,17 +52,22 @@ section.innerHTML = createDropDown(parsed);
 
 //click event to add
 favoriteBtn.addEventListener("click", () => {
-  onPlaceChanged();
-  console.log(favItems);
+  console.log(cityName);
   console.log(parsed);
+//Check if the city is in the array
+  if(parsed.indexOf(cityName) !== -1){
+    alert(`You've already got ${cityName}`);
+  }
   favItems.push(onPlaceChanged());
   parsed.push(onPlaceChanged());
   let json = JSON.stringify(parsed);
-  console.log(json);
+//   console.log(json);
   localStorage.setItem(key, json);
   createDropDown(parsed);
   section.innerHTML = createDropDown(parsed);
 });
 
 //Delete
-function deleteItem() {}
+function deleteItem() {
+
+}
