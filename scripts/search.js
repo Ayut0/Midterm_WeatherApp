@@ -34,6 +34,10 @@ function onPlaceChanged() {
 //create a drop menu options
 function createDropDown(cityArray) {
   let cities = "";
+  if(cityArray === null){
+    cityArray = [];
+  }
+  console.log(cityArray);
   cityArray.forEach((element) => {
     cities += `
                 <option style="display: flex; justify-content: flex-around;" value=${element}>${element} <div id="deleteBtn">delete</div> </option>

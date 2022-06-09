@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .fav__item {
+  float: left;
+  margin-left: 9px;
+  display: inline-block;
+  color: #F0F0F0;
+  text-shadow: 0 0 1px #666666;
+  font-size: 30px;
+}
+
+.highlight,
+.selected {
+  color: #F4B30A;
+  text-shadow: 0 0 1px #F48F0A;
+}
+#fav{
+    cursor: pointer;
+}
+    </style>
+    
+     <div id="currentWeather"></div>
+     <input type="hidden" name="rating" id="rating" />
+     <ul>
+        <li class="fav__item" id="fav">★</li>
+      </ul>
+     
+<p id="demo"></p>
+<input style="width: 50%;" id="searchTextField" type="text" name="city" placeholder="enter city name..."/>
+<div>
+    <input type="button" value="Search" id="searchBtn">
+    <input type="button" value="Favorite" id="favBtn">
+</div>
+<select style="width: 25%; padding: .5rem;" id="dropDown">
+
+</select>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="module" src="./scripts/currentWeather.js"></script>
+    <script  src="./scripts/search.js"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt8mP3heygG-7kXhTwUdLaiL6lCZWTcJE&libraries=places&callback=initAutoComplete"></script>
+</body>
+</html>
