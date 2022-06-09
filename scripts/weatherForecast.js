@@ -20,55 +20,56 @@ async function getWeatherAndForecastAPI () {
     const responseForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKeyMeg}&units=metric`);
     const forecastObj = await responseForecast.json();
     console.log(forecastObj); //Delete this line later
-    // fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=49.2497&lon=-123.1193&appid=${apiKeyMeg}&units=metric`)
     
-    
-    //  createThreeHoursCard(forecastObj, 0);
-     // createThreeHoursCard(forecastObj, 8);
-     // createThreeHoursCard(forecastObj, 16);
-     // createThreeHoursCard(forecastObj, 24);
-    //  createThreeHoursCard(forecastObj, 32);
-
+    createThreeHoursCard(forecastObj, 0);
     createFiveDaysCard(forecastObj);
 
     let fivedaysCard = document.querySelectorAll(".fivedays__card");
-    console.log(fivedaysCard);
+    let rangeCard = document.querySelectorAll(".range__card");
+    
+    
     for (let j =0; j < fivedaysCard.length; j++) {
       fivedaysCard[j].addEventListener("click", switchWeather);
 
       function switchWeather () {
-        switch (j) {
-          case j=0:
-            alert("0");
-            createThreeHoursCard(forecastObj, 0);
-            break;
-          case j=1:
-            alert("1");
+        if (j === 0) {
+          alert("0");
+          rangeCard = document.querySelectorAll(".range__card");
+              rangeCard.forEach(function(card){
+                card.style.display = "none";
+              })
+              createThreeHoursCard(forecastObj, 0);
+        } else if (j === 1) {
+          alert("1");
+          rangeCard = document.querySelectorAll(".range__card");
+          rangeCard.forEach(function(card){
+            card.style.display = "none";
+          })
             createThreeHoursCard(forecastObj, 8);
-            break;
-            case j=2:
-              alert("2");
+        } else if (j === 2) {
+          alert("2");
+          rangeCard = document.querySelectorAll(".range__card");
+          rangeCard.forEach(function(card){
+            card.style.display = "none";
+          })
               createThreeHoursCard(forecastObj, 16);
-              break;
-              case j=3:
-            alert("3");
-            createThreeHoursCard(forecastObj, 24);
-            break;
-            case j=4:
-              alert("4");
-              createThreeHoursCard(forecastObj, 32);
-              break;
-          default:
-            alert("de");
+        } else if (j === 3) {
+          alert("3");
+          rangeCard = document.querySelectorAll(".range__card");
+          rangeCard.forEach(function(card){
+            card.style.display = "none";
+          })
+              createThreeHoursCard(forecastObj, 24);
+        } else if (j === 4) {
+          alert("4");
+          rangeCard = document.querySelectorAll(".range__card");
+          rangeCard.forEach(function(card){
+            card.style.display = "none";
+          })
+            createThreeHoursCard(forecastObj, 32);
         }
         }
     }
-
-    
-
-
-
-
   } catch(error) {
     console.log("Error ", error);
   }
@@ -165,14 +166,10 @@ const createFiveDaysCard = function(obj) {
 }
 
 
-
-
-
-
 // ========
 // Add all EventListener
 // =============
-window.addEventListener('DOMContentLoaded', (event) => {
+// window.addEventListener('DOMContentLoaded', (event) => {
   // let test = document.querySelector(".fivedays__card");
   // console.log(test);
   // test.addEventListener("click", myFunk);
@@ -185,4 +182,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
   //If I click card[1], change 3hrs range cards based on the card you clicked in 5 days cards
   
     
-  });
+  // });
