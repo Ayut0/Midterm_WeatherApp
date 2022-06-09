@@ -9,4 +9,7 @@
 
 #Ignore node_module folder
 node_modules
+
 scripts/currentWeather1.js
+scripts/forecast.js
+scripts/key.js

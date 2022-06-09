@@ -1,0 +1,13 @@
+@use "./modules/variable";
+
+//Mobile first
+@use "./Breakpoints/base";
+
+*{
+    font-family: 'Open Sans', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@media (min-width: 1280px){
+    @use "./Breakpoints/1200pxup";
+}
