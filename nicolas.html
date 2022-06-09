@@ -31,6 +31,7 @@
     cursor: pointer;
 }
     </style>
+    
      <div id="currentWeather"></div>
      <input type="hidden" name="rating" id="rating" />
      <ul>
@@ -38,7 +39,17 @@
       </ul>
      
 <p id="demo"></p>
+<input style="width: 50%;" id="searchTextField" type="text" name="city" placeholder="enter city name..."/>
+<div>
+    <input type="button" value="Search" id="searchBtn">
+    <input type="button" value="Favorite" id="favBtn">
+</div>
+<select style="width: 25%; padding: .5rem;" id="dropDown">
+
+</select>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="module" src="./scripts/currentWeather.js"></script>
+    <script  src="./scripts/search.js"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt8mP3heygG-7kXhTwUdLaiL6lCZWTcJE&libraries=places&callback=initAutoComplete"></script>
 </body>
 </html>
