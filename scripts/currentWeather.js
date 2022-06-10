@@ -48,11 +48,12 @@ searchBtn.addEventListener('click',z=>{
   }else{
     firstName=inputValue.split(' ')[0]
   }
-  if(parsed.includes(firstName)===true){
-    favoriteStars.classList.add("selected")
-  }else{
-    favoriteStars.classList.remove('selected')
-  }
+  if(!(parsed===null)){
+    if(parsed.includes(firstName)===true){
+      favoriteStars.classList.add("selected")
+    }else{
+      favoriteStars.classList.remove('selected')
+    }}
   console.log(firstName);
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${firstName}&appid=${nicolasApi}&units=metric`)
 .then((response) => response.json())
