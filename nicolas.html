@@ -31,7 +31,6 @@
     cursor: pointer;
 }
     </style>
-    
      <div id="currentWeather"></div>
      <input type="hidden" name="rating" id="rating" />
      <ul>
@@ -47,9 +46,10 @@
 <select style="width: 25%; padding: .5rem;" id="dropDown">
 
 </select>
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt8mP3heygG-7kXhTwUdLaiL6lCZWTcJE&libraries=places"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script  type="module" src="./scripts/search.js"></script>
     <script type="module" src="./scripts/currentWeather.js"></script>
-    <script  src="./scripts/search.js"></script>
-    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt8mP3heygG-7kXhTwUdLaiL6lCZWTcJE&libraries=places&callback=initAutoComplete"></script>
+
 </body>
 </html>
