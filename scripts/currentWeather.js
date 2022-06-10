@@ -1,5 +1,6 @@
 
-import nicolasApi from "./nicolasAPIkey.js"
+import nicolasApi from "./nicolasAPIkey.js";
+import parsed from "./search.js";
 
 // Fetching API
 
@@ -12,10 +13,11 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=vancouver&appid=${nicol
   const highestTemperature=Math.floor(result.main.temp_max);
   const temperatureRealTime=Math.floor(result.main.temp);
   const nameOfCity=result.name
+ 
 
   const loadData=()=>{
     const element=document.querySelector("#currentWeather")
-    return element.innerHTML=`
+     element.innerHTML=`
     <h1>${nameOfCity},${result.sys.country}</h1>
     <h2>${temperatureRealTime}°</h2>
     <h3>H:${highestTemperature}°</h3>
@@ -26,34 +28,6 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=vancouver&appid=${nicol
     <favorite-star></favorite-star>`
   }
   loadData();
-
-// Favorite Star code
-  function addRating(obj) {
-    $('li').each(function(index) {
-      $(this).toggleClass('selected');
-      $('#rating').val((index + 1));
-      if (index == $("li").index(obj)) {
-        return false;
-      }
-    });
-  }
-  $("#fav").on('click',function() {
-    addRating(this);
-  });
-// Favorite Bar
-const starButton=document.querySelector(".fav__item")
-starButton.addEventListener("click",(e)=>{
-  if(starButton.classList.contains('selected')){
-    if((localStorage.getItem('cityName')==null)){
-      localStorage.setItem('cityName','[]')
-    }
-    let old_data=JSON.parse(localStorage.getItem('cityName'));
-    old_data.push(nameOfCity)
-    localStorage.setItem('cityName',JSON.stringify(old_data));
-  }
-
-  
-})
   console.log(result)
 })
 
@@ -66,12 +40,18 @@ starButton.addEventListener("click",(e)=>{
 let inputCity=document.querySelector("#searchTextField");
 let searchBtn=document.querySelector("#searchBtn");
 searchBtn.addEventListener('click',z=>{
+  const favoriteStars=document.querySelector('#fav')
   let inputValue=inputCity.value;
   let firstName;
   if(inputValue.indexOf(",")>-1){
     firstName= inputValue.split(',')[0];
   }else{
     firstName=inputValue.split(' ')[0]
+  }
+  if(parsed.includes(firstName)===true){
+    favoriteStars.classList.add("selected")
+  }else{
+    favoriteStars.classList.remove('selected')
   }
   console.log(firstName);
   fetch(`https://api.openweathermap.org/data/2.5/weather?q=${firstName}&appid=${nicolasApi}&units=metric`)
