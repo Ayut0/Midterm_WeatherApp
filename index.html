@@ -1,33 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple Weather App</title>
 
     <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- CSS links-->
     <!-- Normalize -->
-    <link rel="stylesheet" href="./styles/normalize.css">
+    <link rel="stylesheet" href="./styles/normalize.css" />
 
-    <link rel="stylesheet" href="./styles/style.css">
-</head>
-<body>
-    <header>
-
-    </header>
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <header>Weather App</header>
     <main>
-    <section class="range"></section>
-     <section class="fivedays"></section>
+      <!-- Favorite and Search -->
+      <input
+        style="width: 50%"
+        id="searchTextField"
+        type="text"
+        name="city"
+        placeholder="enter city name..."
+      />
+      <div>
+        <input type="button" value="Search" id="searchBtn" />
+        <input type="button" value="Favorite" id="favBtn" />
+      </div>
+      <select style="width: 25%; padding: 0.5rem" id="dropDown"></select>
+
+      <!-- Current Weather -->
+      <div id="currentWeather"></div>
+      <input type="hidden" name="rating" id="rating" />
+      <ul>
+        <li class="fav__item" id="fav">★</li>
+      </ul>
+      <p id="demo"></p>
+
+      <!-- Forecast -->
+      <h2>3 hr range</h2>
+      <section class="range"></section>
+      <h2>5 Days Forecast</h2>
+      <section class="fivedays"></section>
     </main>
-    <footer>
-        
-    </footer>
+    <footer></footer>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCt8mP3heygG-7kXhTwUdLaiL6lCZWTcJE&libraries=places"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="module" src="./scripts/search.js"></script>
     <script type="module" src="./scripts/weatherForecast.js"></script>
     <script type="module" src="./scripts/currentWeather.js"></script>
-</body>
+  </body>
 </html>
