@@ -1,66 +1,115 @@
 import apiKeyMeg from "./forecast.js"
+import parsed from "./search.js"
+console.log(parsed);
 
 //Variable
 const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-const defaultCity = "";
-const selectCity = "";
-let city = "Vancouver"; //Vancouver (default val)
+let defaultCity = "Vancouver"; //Vancouver (default val)
 let lat = 49.2497; //49.2497 (default val: Vancouver)
 let lon = -123.1193; //-123.1193 (default val: Vancouver)
+let btnCounter = 0;
 
 //Fetch API
-async function getWeatherAndForecastAPI () {
+async function getWeatherAndForecastAPI (city) {
   try {
-   //Fetch Current Weather API
-   const responseWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKeyMeg}&units=metric`);
-   const currentWeatherObj = await responseWeather.json();
-   console.log(currentWeatherObj); //Delete this line later
+    //Fetch Current Weather API
+    const responseWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKeyMeg}&units=metric`);
+    const currentWeatherObj = await responseWeather.json();
+    //console.log(currentWeatherObj); //Delete this line later
    
-   //Fetch Forecast API
+    lat = currentWeatherObj.coord.lat; //49.2497 (default val: Vancouver)
+    lon = currentWeatherObj.coord.lon; //-123.1193 (default val: Vancouver)
+    
+    //Fetch Forecast API
     const responseForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKeyMeg}&units=metric`);
     const forecastObj = await responseForecast.json();
     console.log(forecastObj); //Delete this line later
     
+    //Display default cards (Vancouver)
     createThreeHoursCard(forecastObj, 0);
     createFiveDaysCard(forecastObj);
-
+    
+    //Get html elements (divs for forecast cards)
     let fivedaysCard = document.querySelectorAll(".fivedays__card");
     let rangeCard = document.querySelectorAll(".range__card");
+
+    if (btnCounter !== 0) {
+      //Delete default cards
+     rangeCard = document.querySelectorAll(".range__card");
+     rangeCard.forEach(function(newRangeCard) {
+          newRangeCard.style.display = "none";
+     })
+     fivedaysCard = document.querySelectorAll(".fivedays__card");
+     fivedaysCard.forEach(function(newFivedaysCard) {
+          newFivedaysCard.style.display = "none";
+     })
+     createThreeHoursCard(forecastObj, 0);
+     createFiveDaysCard(forecastObj);
+   }
+
+    //Get user input (copy from currentWeather.js)
+    let inputCity=document.querySelector("#searchTextField");
+    let searchBtn=document.querySelector("#searchBtn");
     
+    searchBtn.addEventListener('click',z => {
+      btnCounter++;
+      let inputValue=inputCity.value;
+      let firstName;
+      if(inputValue.indexOf(",") > -1) {
+        firstName= inputValue.split(',')[0];
+        } else {
+        firstName=inputValue.split(' ')[0]
+      }
+      // console.log(firstName); //Delete this line later
+      //Delete default cards
+      rangeCard = document.querySelectorAll(".range__card");
+      rangeCard.forEach(function(newRangeCard) {
+           newRangeCard.style.display = "none";
+      })
+      fivedaysCard = document.querySelectorAll(".fivedays__card");
+      fivedaysCard.forEach(function(newFivedaysCard) {
+           newFivedaysCard.style.display = "none";
+      })
+     
+        defaultCity = firstName;
+        getWeatherAndForecastAPI (defaultCity);
+      
+   }) //end of addEventListener for search button
     
-    for (let j =0; j < fivedaysCard.length; j++) {
-      fivedaysCard[j].addEventListener("click", switchWeather);
+    //Switch 3hr forecast by clicking 5 days cards
+    for (let k =0; k < fivedaysCard.length; k++) {
+      fivedaysCard[k].addEventListener("click", switchWeather);
 
       function switchWeather () {
-        if (j === 0) {
+        if (k === 0) {
           alert("0");
           rangeCard = document.querySelectorAll(".range__card");
               rangeCard.forEach(function(card){
                 card.style.display = "none";
               })
               createThreeHoursCard(forecastObj, 0);
-        } else if (j === 1) {
+        } else if (k === 1) {
           alert("1");
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
             card.style.display = "none";
           })
             createThreeHoursCard(forecastObj, 8);
-        } else if (j === 2) {
+        } else if (k === 2) {
           alert("2");
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
             card.style.display = "none";
           })
               createThreeHoursCard(forecastObj, 16);
-        } else if (j === 3) {
+        } else if (k === 3) {
           alert("3");
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
             card.style.display = "none";
           })
               createThreeHoursCard(forecastObj, 24);
-        } else if (j === 4) {
+        } else if (k === 4) {
           alert("4");
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
@@ -69,15 +118,16 @@ async function getWeatherAndForecastAPI () {
             createThreeHoursCard(forecastObj, 32);
         }
         }
-    }
+    } //end of for loop for switching card
   } catch(error) {
     console.log("Error ", error);
   }
-}
+} //end of getWeatherAndForecastAPI()
 
-getWeatherAndForecastAPI();
+getWeatherAndForecastAPI(defaultCity);
 
-//3hours Forecast
+
+//Function for 3hours Forecast
 const createThreeHoursCard = function(obj, num) {
   let rangeDIV = document.querySelector(".range");
     for (let i = 0+num; i < 8+num; i++) {
@@ -126,7 +176,7 @@ const createThreeHoursCard = function(obj, num) {
 
 
 
-//5days Forecast
+//Function for 5days Forecast
 const createFiveDaysCard = function(obj) {
   let fivedaysDIV = document.querySelector(".fivedays");
 
@@ -170,16 +220,4 @@ const createFiveDaysCard = function(obj) {
 // Add all EventListener
 // =============
 // window.addEventListener('DOMContentLoaded', (event) => {
-  // let test = document.querySelector(".fivedays__card");
-  // console.log(test);
-  // test.addEventListener("click", myFunk);
-
-  // function myFunk () {
-  //   alert("Hello");
-  // }
-  
-  //In 5 days forecast cards,
-  //If I click card[1], change 3hrs range cards based on the card you clicked in 5 days cards
-  
-    
   // });
