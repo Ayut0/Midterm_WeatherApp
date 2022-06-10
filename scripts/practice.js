@@ -7,6 +7,7 @@ const key = "Favorite countries";
 const favoriteBtn = document.querySelector("#favBtn");
 const section = document.querySelector("#dropDown");
 
+
 // localStorage.setItem(key, JSON.stringify(favItems));
 let existArrayInStorage = localStorage.getItem(key);
 let parsed = JSON.parse(existArrayInStorage);
@@ -36,16 +37,17 @@ function onPlaceChanged() {
 
 //create a drop menu options
 function createDropDown(cityArray) {
-  let cities = "";
   if(cityArray === null){
     cityArray = [];
   }
-  cityArray.forEach((element) => {
-    cities += `
-                <option style="display: flex; justify-content: flex-around;" value=${element}>${element} <div id="deleteBtn">delete</div> </option>
-        `;
-  });
-  return cities;
+  console.log(cityArray);
+  return cityArray.map((city, index) =>{
+    return(
+        `
+            <option style="display: flex; justify-content: flex-around;" value=${index} id="favCity">${city}</option>
+        `
+        )
+  })
 }
 createDropDown(parsed);
 section.innerHTML = createDropDown(parsed);
@@ -61,13 +63,29 @@ favoriteBtn.addEventListener("click", () => {
   favItems.push(onPlaceChanged());
   parsed.push(onPlaceChanged());
   let json = JSON.stringify(parsed);
-//   console.log(json);
   localStorage.setItem(key, json);
   createDropDown(parsed);
   section.innerHTML = createDropDown(parsed);
 });
 
 //Delete
-function deleteItem() {
+function deleteItem(name) {
+    const newArray = parsed.filter((item)=>{
+        return name !==item
+    })
+    let newData = JSON.stringify(newArray);
+    localStorage.setItem(key, newData)
 
+    createDropDown(newArray);
+    section.innerHTML = createDropDown(newArray);
 }
+
+deleteItem("Jacksonville");
+
+const favCities = document.querySelectorAll("#favCity");
+
+favCities.forEach(item =>{
+    item.addEventListener("click", (e)=>{
+        console.log(e)
+    })
+})
