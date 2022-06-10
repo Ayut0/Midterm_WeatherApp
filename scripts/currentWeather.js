@@ -30,34 +30,6 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=vancouver&appid=${nicol
   }
   
   loadData();
-
-// Favorite Star code
-  function addRating(obj) {
-    $('li').each(function(index) {
-      $(this).toggleClass('selected');
-      $('#rating').val((index + 1));
-      if (index == $("li").index(obj)) {
-        return false;
-      }
-    });
-  }
-  $("#fav").on('click',function() {
-    addRating(this);
-  });
-// Favorite Bar
-const starButton=document.querySelector(".fav__item")
-starButton.addEventListener("click",(e)=>{
-  if(starButton.classList.contains('selected')){
-    if((localStorage.getItem('cityName')==null)){
-      localStorage.setItem('cityName','[]')
-    }
-    let old_data=JSON.parse(localStorage.getItem('cityName'));
-    old_data.push(nameOfCity)
-    localStorage.setItem('cityName',JSON.stringify(old_data));
-  }
-
-  
-})
   console.log(result)
 })
 
