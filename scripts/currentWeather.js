@@ -1,7 +1,6 @@
 
 import nicolasApi from "./nicolasAPIkey.js";
 import parsed from "./search.js";
-import nicolasApi from "./nicolasAPIkey.js"
 
 // Fetching API
 
