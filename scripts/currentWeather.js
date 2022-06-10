@@ -14,8 +14,6 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=vancouver&appid=${nicol
   const temperatureRealTime=Math.floor(result.main.temp);
   const nameOfCity=result.name
 
-  
-     
   const loadData=()=>{
     const element=document.querySelector("#currentWeather")
     return element.innerHTML=`
@@ -28,8 +26,14 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=vancouver&appid=${nicol
     <img src="https://openweathermap.org/img/w/${result.weather[0].icon}.png" alt="result.weather[0].description"> </img>
     <favorite-star></favorite-star>`
   }
-  
   loadData();
+  const favoriteStars=document.querySelector('#fav')
+  if(!(parsed===null)){
+    if(parsed.includes("Vancouver")===true){
+      favoriteStars.classList.add("selected")
+    }else{
+      favoriteStars.classList.remove('selected')
+    }}
   console.log(result)
 })
 
