@@ -1,17 +1,12 @@
 //Declare variables
 let autocomplete;
 let cityName;
-let favItems = [];
-let deleteBtn = document.querySelectorAll("#deleteBtn");
 const key = "Favorite countries";
 const favoriteBtn = document.querySelector("#favBtn");
-const section = document.querySelector("#dropDown");
-
-
-// localStorage.setItem(key, JSON.stringify(favItems));
+const select = document.querySelector("#dropDown");
+const searchBox = document.querySelector("#searchTextField");
 let existArrayInStorage = localStorage.getItem(key);
 let parsed = JSON.parse(existArrayInStorage);
-console.log(parsed);
 
 //Auto complete function
 function initAutoComplete() {
@@ -29,63 +24,73 @@ function initAutoComplete() {
 function onPlaceChanged() {
   let place = autocomplete.getPlace();
   cityName = place.name.split(",")[0];
-
-  console.log(cityName);
   return cityName;
 }
 
-
 //create a drop menu options
 function createDropDown(cityArray) {
-  if(cityArray === null){
+  if (cityArray === null) {
     cityArray = [];
   }
-  console.log(cityArray);
-  return cityArray.map((city, index) =>{
-    return(
-        `
-            <option style="display: flex; justify-content: flex-around;" value=${index} id="favCity">${city}</option>
-        `
-        )
-  })
+  return cityArray.map((city, index) => {
+    return `
+            <option style="display: flex; justify-content: flex-around;" value=${index} id=${city}>${city}</option>
+        `;
+  });
 }
 createDropDown(parsed);
-section.innerHTML = createDropDown(parsed);
+select.innerHTML = createDropDown(parsed);
 
+if (parsed == null) {
+  parsed = [];
+}
 //click event to add
 favoriteBtn.addEventListener("click", () => {
   console.log(cityName);
-  console.log(parsed);
-//Check if the city is in the array
-  if(parsed.indexOf(cityName) !== -1){
+  if (parsed == null) {
+    parsed = [];
+  }
+  //Check if the city is in the array
+  if (parsed.indexOf(cityName) !== -1) {
     alert(`You've already got ${cityName}`);
   }
-  favItems.push(onPlaceChanged());
+  // favItems.push(onPlaceChanged());
   parsed.push(onPlaceChanged());
+  console.log(parsed);
   let json = JSON.stringify(parsed);
   localStorage.setItem(key, json);
   createDropDown(parsed);
-  section.innerHTML = createDropDown(parsed);
+  select.innerHTML = createDropDown(parsed);
+  searchBox.value = '';
 });
 
 //Delete
 function deleteItem(name) {
-    const newArray = parsed.filter((item)=>{
-        return name !==item
-    })
-    let newData = JSON.stringify(newArray);
-    localStorage.setItem(key, newData)
-
-    createDropDown(newArray);
-    section.innerHTML = createDropDown(newArray);
+  const newArray = parsed.filter((item) => {
+    return name !== item;
+  });
+  console.log(newArray);
+  let newData = JSON.stringify(newArray);
+  console.log(newData);
+  localStorage.setItem(key, newData);
+  document.getElementById(name).remove();
+  value = '';
 }
-
-deleteItem("Jacksonville");
 
 const favCities = document.querySelectorAll("#favCity");
 
-favCities.forEach(item =>{
-    item.addEventListener("click", (e)=>{
-        console.log(e)
-    })
-})
+let value = (parsed.length === 1) ? parsed[0]: '' ;
+console.log(value);
+select.addEventListener("change", (e) => {
+  const selected = e.target.selectedIndex;
+  value = e.target.children[selected].id;
+  console.log(value);
+});
+
+console.log(parsed);
+const deleteBtn = document.querySelector("#delBtn");
+deleteBtn.addEventListener("click", () => {
+  if (value) {
+    deleteItem(value);
+  }
+});
