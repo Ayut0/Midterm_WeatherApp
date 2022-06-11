@@ -44,7 +44,7 @@ function createDropDown(cityArray) {
   console.log(cityArray);
   cityArray.forEach((element) => {
     cities += `
-                <option style="display: flex; justify-content: flex-around;" value=${element}>${element} <div id="deleteBtn">delete</div> </option>
+                <option style="display: flex; justify-content: flex-around;" value=${element}>${element} </option>
         `;
   });
   return cities;
