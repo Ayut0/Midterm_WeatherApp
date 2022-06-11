@@ -44,7 +44,7 @@ function createDropDown(cityArray) {
   console.log(cityArray);
   cityArray.forEach((element) => {
     cities += `
-                <option style="display: flex; justify-content: flex-around;" value=${element}>${element} <div id="deleteBtn">delete</div> </option>
+                <option style="display: flex; justify-content: flex-around;" value=${element}>${element}</option>
         `;
   });
   return cities;
@@ -53,24 +53,23 @@ createDropDown(parsed);
 section.innerHTML = createDropDown(parsed);
 
 //click event to add
-favoriteBtn.addEventListener("click", ()=>{
+// favoriteBtn.addEventListener("click", ()=>{
 
-    onPlaceChanged();
-    console.log(favItems);
-    console.log(parsed);
-    if(parsed==null){
-      parsed = [];
-    }
-    favItems.push(onPlaceChanged());
-    parsed.push(onPlaceChanged());
-    let json = JSON.stringify(parsed);
-    console.log(json);
-    localStorage.setItem(key, json);
-    createDropDown(parsed);
-    section.innerHTML = createDropDown(parsed);
-});
+//     onPlaceChanged();
+//     console.log(favItems);
+//     console.log(parsed);
+//     if(parsed==null){
+//       parsed = [];
+//     }
+//     favItems.push(onPlaceChanged());
+//     parsed.push(onPlaceChanged());
+//     let json = JSON.stringify(parsed);
+//     console.log(json);
+//     localStorage.setItem(key, json);
+//     createDropDown(parsed);
+//     section.innerHTML = createDropDown(parsed);
+// });
 
-//Delete
 
 // Star Code
 
