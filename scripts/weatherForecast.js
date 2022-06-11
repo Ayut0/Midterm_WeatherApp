@@ -1,6 +1,5 @@
 import apiKeyMeg from "./forecast.js"
-import parsed from "./search.js"
-console.log(parsed);
+import parsed from "./search.js" //Get name of favorite cities array
 
 //Variable
 const weekday = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
@@ -8,6 +7,7 @@ let defaultCity = "Vancouver"; //Vancouver (default val)
 let lat = 49.2497; //49.2497 (default val: Vancouver)
 let lon = -123.1193; //-123.1193 (default val: Vancouver)
 let btnCounter = 0;
+let faveCounter = 0;
 
 //Fetch API
 async function getWeatherAndForecastAPI (city) {
@@ -23,7 +23,6 @@ async function getWeatherAndForecastAPI (city) {
     //Fetch Forecast API
     const responseForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKeyMeg}&units=metric`);
     const forecastObj = await responseForecast.json();
-    console.log(forecastObj); //Delete this line later
     
     //Display default cards (Vancouver)
     createThreeHoursCard(forecastObj, 0);
@@ -33,7 +32,7 @@ async function getWeatherAndForecastAPI (city) {
     let fivedaysCard = document.querySelectorAll(".fivedays__card");
     let rangeCard = document.querySelectorAll(".range__card");
 
-    if (btnCounter !== 0) {
+    if (btnCounter !== 0 || faveCounter !== 0) {
       //Delete default cards
      rangeCard = document.querySelectorAll(".range__card");
      rangeCard.forEach(function(newRangeCard) {
@@ -47,7 +46,7 @@ async function getWeatherAndForecastAPI (city) {
      createFiveDaysCard(forecastObj);
    }
 
-    //Get user input (copy from currentWeather.js)
+    //Event for search button
     let inputCity=document.querySelector("#searchTextField");
     let searchBtn=document.querySelector("#searchBtn");
     
@@ -75,7 +74,7 @@ async function getWeatherAndForecastAPI (city) {
         getWeatherAndForecastAPI (defaultCity);
       
    }) //end of addEventListener for search button
-    
+
     //Switch 3hr forecast by clicking 5 days cards
     for (let k =0; k < fivedaysCard.length; k++) {
       fivedaysCard[k].addEventListener("click", switchWeather);
@@ -219,5 +218,18 @@ const createFiveDaysCard = function(obj) {
 // ========
 // Add all EventListener
 // =============
-// window.addEventListener('DOMContentLoaded', (event) => {
-  // });
+window.addEventListener('DOMContentLoaded', (event) => {
+  event.preventDefault()
+  //Event for favorite
+  let selectTag = document.querySelector("select");
+  let options = document.querySelectorAll("option");
+  
+  selectTag.addEventListener("change", function(e) {
+    alert("change");
+       faveCounter++;
+       console.log(selectTag.value);
+       let faveCityName = selectTag.value;
+       getWeatherAndForecastAPI(faveCityName);
+  })
+  
+  });
