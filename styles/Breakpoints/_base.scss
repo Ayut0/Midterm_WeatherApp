@@ -1,35 +1,156 @@
+@use "../modules/variable" as *;
 
-.center{
+body {
+    color: $dark-gray;
+    text-align: center;
+    background-color: $light-gray;
+}
+
+main {
+    width: 90%;
+    margin: 0 auto;
+    background-color: $white;
+}
+
+// Header
+.center {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: $dark-gray;
+    .title {
+        color: $white;
+        font-size: 16px;
+        font-family: $font-opensans;
+        font-weight: 900;
+        letter-spacing: 2px;
+    }
 }
 
-header{
-    background-color: #1F1F1F;
-}
-.title{
-    color: white;
-    font-size: 16px;
-    font-family:'Open Sans', sans-serif;
-    font-weight: 900;
-    letter-spacing: 2px;
-}
-.input__container{
-    margin-top: 30px;
-    margin-bottom: 20px;
-}
-.input-favorite{
+// Search & Favorite
+.input-favorite {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    .input__container {
+        margin-top: 30px;
+        margin-bottom: 20px;
+        .inputCity {
+            border: 1px solid $gray;
+            border-radius: 5px;
+            height: 20px;
+            min-width:100px;
+            outline: 0;
+            background-color: #F5F5F5;
+            padding: 5px;
+        }
+        
+        #searchBtn {
+            background-color: $redorange;
+            color: $white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 20px;
+            &:hover {
+                cursor: pointer;
+                opacity: 0.8;
+                transform: scale(0.9);
+                transition: all .5s;
+            }
+        }
+    }
+    #dropDown {
+        border: 1px solid $gray;
+        border-radius: 5px;
+    }
 }
-.inputCity{
-    border: 1px solid grey;
-    border-radius: 5px;
-    height: 20px;
-    min-width:100px;
-    outline: 0;
-    background-color: #f5f5f5;
+
+// Current Weather
+.heading__currentweather {
+    color: $redorange;
+}
+
+#currentWeather {
+border: 1px solid $light-gray;
+border-radius: 10px;
+width: 80%;
+margin: 0 auto;
+ h1 {
+    font-size: 1.5rem;
+ }
+ h2 {
+    font-weight: 700;
+    font-size: 2rem;
+ }
+ img {
+    width: 8rem;
+ }
+}
+
+//3 hour range
+.heading__range {
+    color: $redorange;
+}
+
+.range {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    &__card {
+        border: 1px solid $light-gray;
+        border-radius: 10px;
+        margin: 10px 5px;
+        padding: 5px;
+        &__temp {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+    }
+}
+
+//Fivedays Forecast
+.heading__fivedays {
+    color: $redorange;
+}
+
+.fivedays {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 0 auto;
+    &__card {
+        // width: 70%;
+        border: 1px solid $light-gray;
+        border-radius: 10px;
+        margin: 10px;
+        padding: 5px;
+        &__date {
+        display: inline;
+        }
+        &__day {
+        display: inline;
+        }
+        &__img {
+            display: block;
+            margin: 0 auto;
+        }
+        &__temp {
+            font-weight: 700;
+            font-size: 1.3rem;
+            padding-bottom: 10px;
+        }
+        &__wrapper__highLow {
+            display: flex;
+            justify-content: center;
+        }
+        &:hover {
+            cursor: pointer;
+            background-color: $light-gray;
+            transform: scale(0.9);
+            transition: all .5s;
+        }
+    }
 }
