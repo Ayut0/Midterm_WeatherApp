@@ -47,7 +47,7 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=vancouver&appid=${nicol
     }else{
       favoriteStars.classList.remove('selected')
     }}
-  console.log(result)
+  // console.log(result)
   })
 
 .catch((err) => {
