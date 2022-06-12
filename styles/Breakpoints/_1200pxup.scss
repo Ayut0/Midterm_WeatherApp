@@ -1,0 +1,52 @@
+@use "../modules/variable" as *;
+
+main {
+  padding: 30px 50px;
+}
+// Search & Favorite
+.input-favorite {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+// Current Weather
+.heading__currentweather {
+  text-align: left;
+}
+
+//3 hour range
+.heading__range {
+  text-align: left;
+}
+
+.range {
+  margin: 20px auto 100px;
+  &__card {
+      margin: 10px 5px;
+      padding: 10px 30px;
+    }
+}
+
+//Fivedays Forecast
+.heading__fivedays {
+  text-align: left;
+}
+
+.fivedays {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  box-sizing: border-box;
+  margin: 20px auto 100px;
+  flex-wrap: wrap;
+  &__card {
+      margin: 30px;
+      padding: 10px 30px;
+      &__img {
+          display: block;
+          margin: 0 auto;
+          width: 5rem;
+        }
+  }
+}
