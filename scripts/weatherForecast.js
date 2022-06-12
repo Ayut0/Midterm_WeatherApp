@@ -1,7 +1,7 @@
 // import apiKeyMeg from "./forecast.js";
 import nicolasApi from "./nicolasAPIkey.js";
 import value from "./search.js"
-// (console.log(value));
+(console.log(value));
 import parsed from "./search.js" //Get name of favorite cities array
 
 //Variable
@@ -29,7 +29,7 @@ async function getWeatherAndForecastAPI (city) {
     //Display default cards (Vancouver)
     createThreeHoursCard(forecastObj, 0);
     createFiveDaysCard(forecastObj);
-    
+
     //Get html elements (divs for forecast cards)
     let fivedaysCard = document.querySelectorAll(".fivedays__card");
     let rangeCard = document.querySelectorAll(".range__card");
@@ -51,8 +51,8 @@ async function getWeatherAndForecastAPI (city) {
     //Event for search button
     let inputCity=document.querySelector("#searchTextField");
     let searchBtn=document.querySelector("#searchBtn");
-    
-    searchBtn.addEventListener('click',z => {
+
+    searchBtn.addEventListener('click',() => {
       btnCounter++;
       let inputValue=inputCity.value;
       let firstName;
@@ -217,7 +217,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
   //Event for favorite
   let selectTag = document.querySelector("select");
   // let options = document.querySelectorAll("option");
-  
+
   let value = parsed.length === 1 ? parsed[0] : "";
   selectTag.addEventListener("change", function(e) {
        faveCounter++;
