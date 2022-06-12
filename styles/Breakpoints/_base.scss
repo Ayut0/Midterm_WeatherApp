@@ -1,0 +1,35 @@
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header{
+    background-color: #1F1F1F;
+}
+.title{
+    color: white;
+    font-size: 16px;
+    font-family:'Open Sans', sans-serif;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+.input__container{
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.input-favorite{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.inputCity{
+    border: 1px solid grey;
+    border-radius: 5px;
+    height: 20px;
+    min-width:100px;
+    outline: 0;
+    background-color: #f5f5f5;
+}

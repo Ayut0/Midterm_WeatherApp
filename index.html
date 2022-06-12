@@ -20,22 +20,17 @@
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
   <body>
-    <header>Weather App</header>
+
+    <header class="center"> <h2 class="title">Weather App</h2></header>
     <main>
       <!-- Favorite and Search -->
-      <input
-        style="width: 50%"
-        id="searchTextField"
-        type="text"
-        name="city"
-        placeholder="enter city name..."
-      />
-      <div>
-        <input type="button" value="Search" id="searchBtn" />
-        <input type="button" value="Favorite" id="favBtn" />
-      </div>
-      <select style="width: 25%; padding: 0.5rem" id="dropDown"></select>
-
+      <section class="input-favorite ">
+        <div class="input__container">
+            <input class="inputCity" id="searchTextField" type="text" name="city" placeholder="Search city..."/>
+            <input type="button" value="Search" id="searchBtn" />
+        </div>
+        <select style="width: 25%; padding: 0.5rem" id="dropDown"></select>
+      </section>
       <!-- Current Weather -->
       <div id="currentWeather"></div>
       <input type="hidden" name="rating" id="rating" />

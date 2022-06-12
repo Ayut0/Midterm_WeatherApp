@@ -41,6 +41,7 @@ function createDropDown(cityArray) {
     cityArray = [];
   }
   console.log(cityArray);
+
   return cityArray.map((city, index) => {
     return `
             <option style="display: flex; justify-content: flex-around;" value=${index} id=${city}>${city}</option>
@@ -59,7 +60,6 @@ favoriteBtn.addEventListener("click", ()=>{
   if(parsed == null){
     parsed = [];
   }
-
   parsed.push(onPlaceChanged());
   let json = JSON.stringify(parsed);
   // console.log(json);
@@ -68,6 +68,7 @@ favoriteBtn.addEventListener("click", ()=>{
   select.innerHTML = createDropDown(parsed);
   searchBox.value = "";
 });
+
 
 
 // Star Code
