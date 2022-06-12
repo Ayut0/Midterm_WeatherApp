@@ -82,6 +82,23 @@ main {
   width: 8rem;
 }
 
+.fav {
+  padding: 0;
+}
+.fav__item {
+  cursor: pointer;
+  width: 10%;
+  margin: 0 auto;
+  display: inline-block;
+  color: #F0F0F0;
+  text-shadow: 0 0 1px #666666;
+  font-size: 30px;
+}
+.fav__item.selected {
+  color: #F4B30A;
+  text-shadow: 0 0 1px #F48F0A;
+}
+
 .heading__range {
   color: #FF4500;
 }
