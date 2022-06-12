@@ -216,13 +216,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
   event.preventDefault()
   //Event for favorite
   let selectTag = document.querySelector("select");
-  let options = document.querySelectorAll("option");
+  // let options = document.querySelectorAll("option");
   
   let value = parsed.length === 1 ? parsed[0] : "";
   selectTag.addEventListener("change", function(e) {
        faveCounter++;
        const selected = e.target.selectedIndex;
-       console.log(selectTag);
+      //  console.log(selectTag);
        value = e.target.children[selected].id;
        console.log(value);
        getWeatherAndForecastAPI(value);

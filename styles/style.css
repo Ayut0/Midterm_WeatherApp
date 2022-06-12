@@ -59,6 +59,8 @@ main {
 .input-favorite #dropDown {
   border: 1px solid #666C72;
   border-radius: 5px;
+  width: 20%;
+  cursor: pointer;
 }
 
 .heading__currentweather {
