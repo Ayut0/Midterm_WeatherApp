@@ -1,16 +1,17 @@
 // import loadData from "./currentWeather";
 import nicolasApi from "./nicolasAPIkey.js";
-import getWeatherAndForecastAPI from "./weatherForecast.js"
+// import getWeatherAndForecastAPI from "./weatherForecast.js"
 
 //Declare variables
 let autocomplete;
 let cityName;
 const key = "Favorite countries"
-const favoriteBtn = document.querySelector("#favBtn");
 const select = document.querySelector("#dropDown");
 const searchBox = document.querySelector("#searchTextField");
 let existArrayInStorage = localStorage.getItem(key);
 let parsed = JSON.parse(existArrayInStorage);
+const starButton = document.querySelector(".fav__item");
+const favSelected = document.querySelector("#fav");
 export default parsed;
 
 //Auto complete function
@@ -55,21 +56,18 @@ if (parsed == null) {
 }
 
 //click event to add
-favoriteBtn.addEventListener("click", ()=>{
+starButton.addEventListener("click", () => {
   console.log(parsed);
-  if(parsed == null){
+  if (parsed == null) {
     parsed = [];
   }
   parsed.push(onPlaceChanged());
   let json = JSON.stringify(parsed);
-  // console.log(json);
   localStorage.setItem(key, json);
   createDropDown(parsed);
   select.innerHTML = createDropDown(parsed);
   searchBox.value = "";
 });
-
-
 
 // Star Code
 function addRating(obj) {
@@ -86,8 +84,6 @@ $("#fav").on('click',function() {
 });
 
 // Favorite Bar
-const starButton=document.querySelector(".fav__item")
-const favSelected=document.querySelector("#fav")
 starButton.addEventListener("click",()=>{
   if(favSelected.classList.contains('selected')){
     onPlaceChanged();
@@ -124,13 +120,11 @@ select.addEventListener("change", (e) => {
   const selected = e.target.selectedIndex;
   value = e.target.children[selected].id;
   console.log(value);
-  getWeatherAndForecastAPI(value);
   fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${nicolasApi}&units=metric`
   )
     .then((response) => response.json())
     .then((result) => {
-      
       const lowestTemperature = Math.floor(result.main.temp_min);
       const highestTemperature = Math.floor(result.main.temp_max);
       const temperatureRealTime = Math.floor(result.main.temp);
@@ -139,14 +133,14 @@ select.addEventListener("change", (e) => {
       const loadData = () => {
         const element = document.querySelector("#currentWeather");
         return (element.innerHTML = `
-    <h1>${nameOfCity},${result.sys.country}</h1>
-    <h2>${temperatureRealTime}°</h2>
-    <h3>H:${highestTemperature}°</h3>
-    <h3>L:${lowestTemperature}°</h3>
-    <h3>${result.weather[0].description}</h3>
-    <h3>Humidity:${result.main.humidity}%</h3>
-    <img src="https://openweathermap.org/img/w/${result.weather[0].icon}.png" alt="result.weather[0].description"> </img>
-    <favorite-star></favorite-star>`);
+          <h1>${nameOfCity},${result.sys.country}</h1>
+          <h2>${temperatureRealTime}°</h2>
+          <h3>H:${highestTemperature}°</h3>
+          <h3>L:${lowestTemperature}°</h3>
+          <h3>${result.weather[0].description}</h3>
+          <h3>Humidity:${result.main.humidity}%</h3>
+          <img src="https://openweathermap.org/img/w/${result.weather[0].icon}.png" alt="result.weather[0].description"> </img>
+          <favorite-star></favorite-star>`);
       };
       loadData();
 
@@ -159,6 +153,7 @@ select.addEventListener("change", (e) => {
         }
       }
       console.log(result);
+      return value;
     })
 
     .catch((err) => {
@@ -174,5 +169,4 @@ console.log(parsed);
 //   }
 // });
 // Star selected
-
 
