@@ -1,4 +1,7 @@
-import apiKeyMeg from "./forecast.js"
+// import apiKeyMeg from "./forecast.js";
+import nicolasApi from "./nicolasAPIkey.js";
+import value from "./search.js"
+// (console.log(value));
 import parsed from "./search.js" //Get name of favorite cities array
 
 //Variable
@@ -13,14 +16,14 @@ let faveCounter = 0;
 async function getWeatherAndForecastAPI (city) {
   try {
     //Fetch Current Weather API
-    const responseWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKeyMeg}&units=metric`);
+    const responseWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${nicolasApi}&units=metric`);
     const currentWeatherObj = await responseWeather.json();
    
     lat = currentWeatherObj.coord.lat; //49.2497 (default val: Vancouver)
     lon = currentWeatherObj.coord.lon; //-123.1193 (default val: Vancouver)
     
     //Fetch Forecast API
-    const responseForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKeyMeg}&units=metric`);
+    const responseForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${nicolasApi}&units=metric`);
     const forecastObj = await responseForecast.json();
     
     //Display default cards (Vancouver)
@@ -188,7 +191,7 @@ const createFiveDaysCard = function(obj) {
    const d = new Date(obj.list[i].dt_txt);
    let day = weekday[d.getDay()];
    
-    fivedaysDIV.innerHTML += 
+    fivedaysDIV.innerHTML +=
      `
      <div class="fivedays__card">
        <div class="fivedays__card__date">${mm}/${dd}</div>
@@ -215,11 +218,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
   let selectTag = document.querySelector("select");
   let options = document.querySelectorAll("option");
   
+  let value = parsed.length === 1 ? parsed[0] : "";
   selectTag.addEventListener("change", function(e) {
        faveCounter++;
-       console.log(selectTag.value);
-       let faveCityName = selectTag.value;
-       getWeatherAndForecastAPI(faveCityName);
+       const selected = e.target.selectedIndex;
+       console.log(selectTag);
+       value = e.target.children[selected].id;
+       console.log(value);
+       getWeatherAndForecastAPI(value);
    })
-  
 });
