@@ -15,7 +15,6 @@ async function getWeatherAndForecastAPI (city) {
     //Fetch Current Weather API
     const responseWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKeyMeg}&units=metric`);
     const currentWeatherObj = await responseWeather.json();
-    //console.log(currentWeatherObj); //Delete this line later
    
     lat = currentWeatherObj.coord.lat; //49.2497 (default val: Vancouver)
     lon = currentWeatherObj.coord.lon; //-123.1193 (default val: Vancouver)
@@ -59,7 +58,6 @@ async function getWeatherAndForecastAPI (city) {
         } else {
         firstName=inputValue.split(' ')[0]
       }
-      // console.log(firstName); //Delete this line later
       //Delete default cards
       rangeCard = document.querySelectorAll(".range__card");
       rangeCard.forEach(function(newRangeCard) {
@@ -81,35 +79,30 @@ async function getWeatherAndForecastAPI (city) {
 
       function switchWeather () {
         if (k === 0) {
-          alert("0");
           rangeCard = document.querySelectorAll(".range__card");
               rangeCard.forEach(function(card){
                 card.style.display = "none";
               })
               createThreeHoursCard(forecastObj, 0);
         } else if (k === 1) {
-          alert("1");
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
             card.style.display = "none";
           })
             createThreeHoursCard(forecastObj, 8);
         } else if (k === 2) {
-          alert("2");
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
             card.style.display = "none";
           })
               createThreeHoursCard(forecastObj, 16);
         } else if (k === 3) {
-          alert("3");
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
             card.style.display = "none";
           })
               createThreeHoursCard(forecastObj, 24);
         } else if (k === 4) {
-          alert("4");
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
             card.style.display = "none";
@@ -173,8 +166,6 @@ const createThreeHoursCard = function(obj, num) {
   return rangeDIV;
 }
 
-
-
 //Function for 5days Forecast
 const createFiveDaysCard = function(obj) {
   let fivedaysDIV = document.querySelector(".fivedays");
@@ -225,11 +216,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
   let options = document.querySelectorAll("option");
   
   selectTag.addEventListener("change", function(e) {
-    alert("change");
        faveCounter++;
        console.log(selectTag.value);
        let faveCityName = selectTag.value;
        getWeatherAndForecastAPI(faveCityName);
-  })
+   })
   
-  });
+});
