@@ -91,6 +91,10 @@ starButton.addEventListener("click",()=>{
     if(parsed == null){
       parsed = [];
     }
+    if (parsed.indexOf(cityName) !== -1) {
+      alert(`You've already got ${cityName}`);
+      return;
+    }
     parsed.push(onPlaceChanged());
     let json = JSON.stringify(parsed);
     // console.log(json);
@@ -161,12 +165,11 @@ select.addEventListener("change", (e) => {
     });
 });
 
-console.log(parsed);
-// const deleteBtn = document.querySelector("#delBtn");
-// deleteBtn.addEventListener("click", () => {
-//   if (value) {
-//     deleteItem(value);
-//   }
-// });
+const deleteBtn = document.querySelector(".fav__item");
+deleteBtn.addEventListener("click", () => {
+  if (value) {
+    deleteItem(value);
+  }
+});
 // Star selected
 
