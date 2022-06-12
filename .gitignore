@@ -12,4 +12,5 @@ node_modules
 
 scripts/currentWeather1.js
 scripts/forecast.js
+scripts/nicolasAPIkey.js
 scripts/key.js
