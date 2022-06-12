@@ -32,6 +32,7 @@ function createDropDown(cityArray) {
   if (cityArray === null) {
     cityArray = [];
   }
+  console.log(cityArray);
   return cityArray.map((city, index) => {
     return `
             <option style="display: flex; justify-content: flex-around;" value=${index} id=${city}>${city}</option>

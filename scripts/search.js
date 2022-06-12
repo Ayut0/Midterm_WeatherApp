@@ -27,21 +27,24 @@ window.addEventListener("DOMContentLoaded", ()=>{
   //Get city name
   function onPlaceChanged() {
       let place = autocomplete.getPlace();
-  
+
       place === undefined
         ? (cityName = "Vancouver")
         : (cityName = place.name.split(",")[0]);
         console.log(cityName)
         return cityName;
   }
-  
+
   //create a drop menu options
   function createDropDown(cityArray) {
     if(cityArray === null){
       cityArray = [];
+      return `
+              <option hidden style="display: flex; justify-content: flex-around;">Favorite</option>
+          `;
     }
     console.log(cityArray);
-  
+
     return cityArray.map((city, index) => {
       return `
               <option style="display: flex; justify-content: flex-around;" value=${index} id=${city}>${city}</option>
@@ -57,22 +60,26 @@ window.addEventListener("DOMContentLoaded", ()=>{
   let value = parsed.length === 1 ? parsed[0] : "";
   console.log(value);
   select.addEventListener("change", (e) => {
+    if(parsed.length === 1){
+      value = parsed[0];
+    }
     const selected = e.target.selectedIndex;
+    console.log(selected);
     value = e.target.children[selected].id;
     console.log(value);
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${nicolasApi}&units=metric`
-    )
-      .then((response) => response.json())
-      .then((result) => {
-        const lowestTemperature = Math.floor(result.main.temp_min);
-        const highestTemperature = Math.floor(result.main.temp_max);
-        const temperatureRealTime = Math.floor(result.main.temp);
-        const nameOfCity = result.name;
-  
-        const loadData = () => {
-          const element = document.querySelector("#currentWeather");
-          return (element.innerHTML = `
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${nicolasApi}&units=metric`
+      )
+        .then((response) => response.json())
+        .then((result) => {
+          const lowestTemperature = Math.floor(result.main.temp_min);
+          const highestTemperature = Math.floor(result.main.temp_max);
+          const temperatureRealTime = Math.floor(result.main.temp);
+          const nameOfCity = result.name;
+
+          const loadData = () => {
+            const element = document.querySelector("#currentWeather");
+            return (element.innerHTML = `
             <h1>${nameOfCity},${result.sys.country}</h1>
             <h2>${temperatureRealTime}°</h2>
             <h3>H:${highestTemperature}°</h3>
@@ -81,47 +88,30 @@ window.addEventListener("DOMContentLoaded", ()=>{
             <h3>Humidity:${result.main.humidity}%</h3>
             <img src="https://openweathermap.org/img/w/${result.weather[0].icon}.png" alt="result.weather[0].description"> </img>
             <favorite-star></favorite-star>`);
-        };
-        loadData();
-  
-        const favoriteStars = document.querySelector("#fav");
-        if (!(parsed === null)) {
-          if (parsed.includes("Vancouver") === true) {
-            favoriteStars.classList.add("selected");
-          } else {
-            favoriteStars.classList.remove("selected");
+          };
+          loadData();
+
+          const favoriteStars = document.querySelector("#fav");
+          if (!(parsed === null)) {
+            if (parsed.includes("Vancouver") === true) {
+              favoriteStars.classList.add("selected");
+            } else {
+              favoriteStars.classList.remove("selected");
+            }
           }
-        }
-        // console.log(result);
-        return value;
-      })
-  
-      .catch((err) => {
-        console.log(err);
-      });
+
+          if (parsed.includes(value)) {
+            console.log("Match !!");
+            starButton.classList.add("selected");
+          }
+          return value;
+        })
+
+        .catch((err) => {
+          console.log(err);
+        });
   });
-  
-  // const deleteBtn = document.querySelector(".fav__item");
-  // deleteBtn.addEventListener("click", () => {
-  //   if (value) {
-  //     deleteItem(value);
-  //   }
-  // });
-  
-  //click event to add
-  // starButton.addEventListener("click", () => {
-  //   console.log(parsed);
-  //   if (parsed == null) {
-  //     parsed = [];
-  //   }
-  //   parsed.push(onPlaceChanged());
-  //   let json = JSON.stringify(parsed);
-  //   localStorage.setItem(key, json);
-  //   createDropDown(parsed);
-  //   select.innerHTML = createDropDown(parsed);
-  //   searchBox.value = "";
-  // });
-  
+
   // Star Code
   function addRating(obj) {
     $('li').each(function(index) {
@@ -135,11 +125,12 @@ window.addEventListener("DOMContentLoaded", ()=>{
   $("#fav").on('click',function() {
     addRating(this);
   });
-  
+
+
   //Add to Favorite
   starButton.addEventListener("click",()=>{
     if ((favSelected.classList.contains("selected"))){
-      if (parsed.indexOf(cityName) !== -1){
+      if (parsed.indexOf(onPlaceChanged()) !== -1){
         alert(`You've already got this city`);
         return;
       }
@@ -176,5 +167,5 @@ window.addEventListener("DOMContentLoaded", ()=>{
     document.getElementById(name).remove();
     value = "";
   }
+  console.log(parsed);
 })
-
