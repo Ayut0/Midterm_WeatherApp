@@ -6,6 +6,7 @@ const key = "Favorite countries"
 const select = document.querySelector("#dropDown");
 const searchBox = document.querySelector("#searchTextField");
 let existArrayInStorage = localStorage.getItem(key);
+console.log(existArrayInStorage);
 let parsed = JSON.parse(existArrayInStorage);
 const starButton = document.querySelector(".fav__item");
 const favSelected = document.querySelector("#fav");
@@ -52,12 +53,15 @@ window.addEventListener("DOMContentLoaded", ()=>{
           `;
     });
   }
-  createDropDown(parsed);
-  select.innerHTML = createDropDown(parsed);
+  (function initialDropDown(){
+    console.log(parsed);
+    createDropDown(parsed);
+    select.innerHTML = createDropDown(parsed);
+  }());
+
   if (parsed == null) {
     parsed = [];
   }
-
   let value = parsed.length >= 1 ? parsed[0] : "";
 
   // console.log(value);
