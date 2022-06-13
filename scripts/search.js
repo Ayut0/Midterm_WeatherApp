@@ -32,36 +32,36 @@ window.addEventListener("DOMContentLoaded", ()=>{
     place === undefined
       ? (cityName = "Vancouver")
       : (cityName = place.name.split(",")[0]);
-    console.log(cityName);
+    // console.log(cityName);
     return cityName;
   }
 
-  console.log(onPlaceChanged());
+  if (parsed == null) {
+    parsed = [];
+  }
 
   //create a drop menu options
   function createDropDown(cityArray) {
     if (cityArray === null) {
       cityArray = [];
       return `
-              <option hidden style="display: flex; justify-content: flex-around;">Favorite</option>
+              <option hidden">Favorite</option>
           `;
     }
-    console.log(cityArray);
+    // console.log(cityArray);
     return cityArray.map((city, index) => {
+      console.log(city);
       return `
-              <option style="display: flex; justify-content: flex-around;" value=${index} id=${city}>${city}</option>
+              <option value=${index} id=${city}>${city}</option>
           `;
     });
   }
   (function initialDropDown(){
-    console.log(parsed);
+    // console.log(parsed);
     createDropDown(parsed);
     select.innerHTML = createDropDown(parsed);
   }());
 
-  if (parsed == null) {
-    parsed = [];
-  }
   let value = parsed.length >= 1 ? parsed[0] : "";
 
   // console.log(value);
@@ -76,6 +76,10 @@ window.addEventListener("DOMContentLoaded", ()=>{
     )
       .then((response) => response.json())
       .then((result) => {
+        //Error check
+        if (result.cod !== 200) {
+          throw new Error();
+        }
         const lowestTemperature = Math.floor(result.main.temp_min);
         const highestTemperature = Math.floor(result.main.temp_max);
         const temperatureRealTime = Math.floor(result.main.temp);
@@ -85,9 +89,9 @@ window.addEventListener("DOMContentLoaded", ()=>{
           const element = document.querySelector("#currentWeather");
           return (element.innerHTML = `
             <h1>${nameOfCity},${result.sys.country}</h1>
-            <h2>${temperatureRealTime}°</h2>
-            <h3>H:${highestTemperature}°</h3>
-            <h3>L:${lowestTemperature}°</h3>
+            <h2>${temperatureRealTime}&#8451</h2>
+            <h3>H:${highestTemperature}&#8451</h3>
+            <h3>L:${lowestTemperature}&#8451</h3>
             <h3>${result.weather[0].description}</h3>
             <h3>Humidity:${result.main.humidity}%</h3>
             <img src="https://openweathermap.org/img/w/${result.weather[0].icon}.png" alt="result.weather[0].description"> </img>
@@ -135,22 +139,26 @@ window.addEventListener("DOMContentLoaded", ()=>{
   //Add to Favorite
   starButton.addEventListener("click", () => {
     if (favSelected.classList.contains("selected")) {
-      if (parsed.includes(onPlaceChanged())) {
+      existArrayInStorage = localStorage.getItem(key);
+      let parsedStorage = JSON.parse(existArrayInStorage);
+      console.log(parsedStorage);
+      console.log(cityName);
+      if (parsedStorage.includes(cityName)) {
         alert(`You've already got this city`);
         searchBox.value = "";
         return;
       }
 
-      console.log(parsed);
-      if (parsed == null) {
-        parsed = [];
+      console.log(parsedStorage);
+      if (parsedStorage === null) {
+        parsedStorage = [];
       }
-      parsed.push(onPlaceChanged());
-      console.log(parsed);
-      let json = JSON.stringify(parsed);
+      parsedStorage.push(cityName);
+      console.log(parsedStorage);
+      let json = JSON.stringify(parsedStorage);
       localStorage.setItem(key, json);
-      createDropDown(parsed);
-      select.innerHTML = createDropDown(parsed);
+      createDropDown(parsedStorage);
+      select.innerHTML = createDropDown(parsedStorage);
       searchBox.value = "";
     } else {
       console.log(value);
@@ -161,6 +169,9 @@ window.addEventListener("DOMContentLoaded", ()=>{
   //Delete
   function deleteItem(name) {
     console.log(name);
+    //load local storage
+    existArrayInStorage = localStorage.getItem(key);
+    parsed = JSON.parse(existArrayInStorage);
     let newArray = parsed.filter((item) => {
       return name !== item;
     });
@@ -172,7 +183,6 @@ window.addEventListener("DOMContentLoaded", ()=>{
     createDropDown(newArray);
     value = "";
   }
-  console.log(parsed);
 
   //Compare the local storage and select box
   console.log(value);

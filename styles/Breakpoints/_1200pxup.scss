@@ -8,6 +8,18 @@ main {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  #dropDown {
+        width: 20%;
+    }
+    .input__container{
+      display: flex;
+      justify-content: space-between;
+      width: 30%;
+      .inputCity{
+        width: 60%;
+        padding: 0.5rem;
+      }
+    }
 }
 
 // Current Weather
