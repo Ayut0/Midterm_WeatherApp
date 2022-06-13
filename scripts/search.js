@@ -6,7 +6,6 @@ const key = "Favorite countries"
 const select = document.querySelector("#dropDown");
 const searchBox = document.querySelector("#searchTextField");
 let existArrayInStorage = localStorage.getItem(key);
-console.log(existArrayInStorage);
 let parsed = JSON.parse(existArrayInStorage);
 const starButton = document.querySelector(".fav__item");
 const favSelected = document.querySelector("#fav");
@@ -36,6 +35,8 @@ window.addEventListener("DOMContentLoaded", ()=>{
     return cityName;
   }
 
+  //Check if local storage is empty.
+  //If it is, store empty array as a initial value to use array methods
   if (parsed == null) {
     parsed = [];
   }
@@ -50,7 +51,6 @@ window.addEventListener("DOMContentLoaded", ()=>{
     }
     // console.log(cityArray);
     return cityArray.map((city, index) => {
-      console.log(city);
       return `
               <option value=${index} id=${city}>${city}</option>
           `;
@@ -64,41 +64,40 @@ window.addEventListener("DOMContentLoaded", ()=>{
 
   let value = parsed.length >= 1 ? parsed[0] : "";
 
-  // console.log(value);
+  //Create a current weather
+  const createCurrentWeatherCard = (city)=>{
+    const lowestTemperature = Math.floor(city.main.temp_min);
+    const highestTemperature = Math.floor(city.main.temp_max);
+    const temperatureRealTime = Math.floor(city.main.temp);
+    const nameOfCity = city.name;
+
+    const element = document.querySelector("#currentWeather");
+    return (element.innerHTML = `
+          <h1>${nameOfCity},${city.sys.country}</h1>
+          <h2>${temperatureRealTime}&#8451</h2>
+          <h3>H:${highestTemperature}&#8451</h3>
+          <h3>L:${lowestTemperature}&#8451</h3>
+          <h3>${city.weather[0].description}</h3>
+          <h3>Humidity:${city.main.humidity}%</h3>
+          <img src="https://openweathermap.org/img/w/${city.weather[0].icon}.png" alt="result.weather[0].description"> </img>
+          <favorite-star></favorite-star>`);
+  }
+
   select.addEventListener("change", (e) => {
     const selected = e.target.selectedIndex;
-    console.log(selected);
     value = e.target.children[selected].innerHTML;
-    // console.log((e.target.children)[selected].innerHTML);
-    console.log(value);
     fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${value}&appid=${nicolasApi}&units=metric`
     )
       .then((response) => response.json())
       .then((result) => {
-        //Error check
+        //Error check if it is able to fetch data
         if (result.cod !== 200) {
           throw new Error();
         }
-        const lowestTemperature = Math.floor(result.main.temp_min);
-        const highestTemperature = Math.floor(result.main.temp_max);
-        const temperatureRealTime = Math.floor(result.main.temp);
-        const nameOfCity = result.name;
-
-        const loadData = () => {
-          const element = document.querySelector("#currentWeather");
-          return (element.innerHTML = `
-            <h1>${nameOfCity},${result.sys.country}</h1>
-            <h2>${temperatureRealTime}&#8451</h2>
-            <h3>H:${highestTemperature}&#8451</h3>
-            <h3>L:${lowestTemperature}&#8451</h3>
-            <h3>${result.weather[0].description}</h3>
-            <h3>Humidity:${result.main.humidity}%</h3>
-            <img src="https://openweathermap.org/img/w/${result.weather[0].icon}.png" alt="result.weather[0].description"> </img>
-            <favorite-star></favorite-star>`);
-        };
-        loadData();
-
+        //Create weather card according to data
+        createCurrentWeatherCard(result);
+        
         const favoriteStars = document.querySelector("#fav");
         if (!(parsed === null)) {
           if (parsed.includes("Vancouver") === true) {
@@ -108,10 +107,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
           }
         }
 
-        console.log(value);
-        console.log(parsed);
         if (parsed.includes(value)) {
-          console.log("Match !!", value);
           starButton.classList.add("selected");
         }
         return value;
@@ -122,7 +118,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
       });
   });
 
-  // Star Code
+  //Toggling Star Code
   function addRating(obj) {
     $("li").each(function (index) {
       $(this).toggleClass("selected");
@@ -141,8 +137,6 @@ window.addEventListener("DOMContentLoaded", ()=>{
     if (favSelected.classList.contains("selected")) {
       existArrayInStorage = localStorage.getItem(key);
       let parsedStorage = JSON.parse(existArrayInStorage);
-      console.log(parsedStorage);
-      console.log(cityName);
 
       if (parsedStorage === null) {
         parsedStorage = [];
@@ -153,23 +147,19 @@ window.addEventListener("DOMContentLoaded", ()=>{
         return;
       }
 
-      console.log(parsedStorage);
-      parsedStorage.push(cityName);
-      console.log(parsedStorage);
-      let json = JSON.stringify(parsedStorage);
+      let newFavoriteList = [...parsedStorage, cityName];
+      let json = JSON.stringify(newFavoriteList);
       localStorage.setItem(key, json);
-      createDropDown(parsedStorage);
-      select.innerHTML = createDropDown(parsedStorage);
+      createDropDown(newFavoriteList);
+      select.innerHTML = createDropDown(newFavoriteList);
       searchBox.value = "";
     } else {
-      console.log(value);
       deleteItem(value);
     }
   });
 
   //Delete
   function deleteItem(name) {
-    console.log(name);
     //load local storage
     existArrayInStorage = localStorage.getItem(key);
     parsed = JSON.parse(existArrayInStorage);
@@ -177,7 +167,6 @@ window.addEventListener("DOMContentLoaded", ()=>{
       return name !== item;
     });
 
-    console.log(newArray);
     let newData = JSON.stringify(newArray);
     localStorage.setItem(key, newData);
     createDropDown(newArray);
@@ -186,9 +175,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
   }
 
   //Compare the local storage and select box
-  console.log(value);
   if (parsed.includes(value)) {
-    console.log("Match !!", value);
     starButton.classList.add("selected");
   }
 })
