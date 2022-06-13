@@ -148,26 +148,24 @@ const createThreeHoursCard = function(obj, num) {
       
       if (hr === "0") {
       //AM
-      rangeDIV.innerHTML += 
-      `
+      rangeDIV.innerHTML += `
       <div class="range__card">
         <div class="range__card__date">${mm}/${dd}</div>
         <div class="range__card__time">${hh} AM</div>
         <img class="range__card__img" src="https://openweathermap.org/img/w/${obj.list[i].weather[0].icon}.png">
-        <div class="range__card__temp">${tempInt}°</div>
+        <div class="range__card__temp">${tempInt}&#8451</div>
       </div>
-      `
+      `;
       } else {
       //PM
-        rangeDIV.innerHTML += 
-        `
+        rangeDIV.innerHTML += `
       <div class="range__card">
         <div class="range__card__date">${mm}/${dd}</div>
         <div class="range__card__time">${hh} PM</div>
         <img class="range__card__img" src="https://openweathermap.org/img/w/${obj.list[i].weather[0].icon}.png">
-        <div class="range__card__temp">${tempInt}°</div>
+        <div class="range__card__temp">${tempInt}&#8451</div>
       </div>
-        `
+        `;
       }
     }
   return rangeDIV;
@@ -195,19 +193,18 @@ const createFiveDaysCard = function(obj) {
    const d = new Date(obj.list[i].dt_txt);
    let day = weekday[d.getDay()];
    
-    fivedaysDIV.innerHTML +=
-     `
+    fivedaysDIV.innerHTML += `
      <div class="fivedays__card">
        <div class="fivedays__card__date">${mm}/${dd}</div>
        <div class="fivedays__card__day">${day}</div>
        <img class="fivedays__card__img" src="https://openweathermap.org/img/w/${obj.list[i].weather[0].icon}.png">
-       <div class="fivedays__card__temp">${tempInt}°</div>
+       <div class="fivedays__card__temp">${tempInt}&#8451</div>
        <div class="fivedays__card__wrapper__highLow">
-         <div class="fivedays__card__wrapper__highLow__h">H: ${tempIntH}°</div>
-         <div class="fivedays__card__wrapper__highLow__h">L: ${tempIntL}°</div>
+         <div class="fivedays__card__wrapper__highLow__h">H: ${tempIntH}&#176/</div>
+         <div class="fivedays__card__wrapper__highLow__h">L: ${tempIntL}&#176</div>
        </div>
      </div>
-     `
+     `;
   }
   return fivedaysDIV;
 }
@@ -227,7 +224,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
        faveCounter++;
        const selected = e.target.selectedIndex;
       //  console.log(selectTag);
-       value = e.target.children[selected].id;
+       value = e.target.children[selected].innerHTML;
       //  console.log(value);
        getWeatherAndForecastAPI(value);
    })

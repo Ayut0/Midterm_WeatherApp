@@ -61,9 +61,12 @@ main {
         }
     }
     #dropDown {
-        border: 1px solid $gray;
+        // border: 1px solid $gray;
         border-radius: 5px;
-        width: 20%;
+        width: 50%;
+        border: none;
+        font-size: 20px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
         cursor: pointer;
     }
 }
@@ -74,20 +77,20 @@ main {
 }
 
 #currentWeather{
-border: 1px solid $light-gray;
-border-radius: 10px;
-width: 80%;
-margin: 0 auto;
- h1 {
-    font-size: 1.5rem;
- }
- h2 {
-    font-weight: 700;
-    font-size: 2rem;
- }
- img {
-    width: 8rem;
- }
+    border: 1px solid $light-gray;
+    border-radius: 10px;
+    width: 80%;
+    margin: 0 auto;
+        h1 {
+            font-size: 1.5rem;
+        }
+        h2 {
+            font-weight: 700;
+            font-size: 2rem;
+        }
+        img {
+            width: 8rem;
+        }
 }
 
 .fav{
@@ -165,6 +168,9 @@ margin: 0 auto;
         &__wrapper__highLow {
             display: flex;
             justify-content: center;
+            &__h{
+                margin-right: .2rem;
+            }
         }
         &:hover {
             cursor: pointer;
