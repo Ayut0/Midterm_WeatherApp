@@ -7,8 +7,6 @@ if(parsed === null){
 }else if (parsed.length >= 1){
   initialCity = parsed[0]
 }
-// console.log(initialCity);
-console.log(parsed);
 
 export const loadData = () => {
   const element = document.querySelector("#currentWeather");
@@ -49,14 +47,13 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${initialCity}&appid=${
   }
   loadData();
 
-  const favoriteStars = document.querySelector('#fav')
-  if(!(parsed === null)){
-    if(parsed.includes("Vancouver") === true){
-      favoriteStars.classList.add("selected")
-    }else{
-      favoriteStars.classList.remove('selected')
-    }}
-  // console.log(result)
+  // const favoriteStars = document.querySelector('#fav')
+  // if(!(parsed === null)){
+  //   if(parsed.includes("Vancouver") === true){
+  //     favoriteStars.classList.add("selected")
+  //   }else{
+  //     favoriteStars.classList.remove('selected')
+  //   }}
   })
 
 .catch((err) => {
