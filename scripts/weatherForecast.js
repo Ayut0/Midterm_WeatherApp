@@ -33,16 +33,17 @@ async function getWeatherAndForecastAPI (city) {
     //Get html elements (divs for forecast cards)
     let fivedaysCard = document.querySelectorAll(".fivedays__card");
     let rangeCard = document.querySelectorAll(".range__card");
-
     if (btnCounter !== 0 || faveCounter !== 0) {
       //Delete default cards
      rangeCard = document.querySelectorAll(".range__card");
      rangeCard.forEach(function(newRangeCard) {
-          newRangeCard.style.display = "none";
+          // newRangeCard.style.display = "none";
+          newRangeCard.remove();
      })
      fivedaysCard = document.querySelectorAll(".fivedays__card");
      fivedaysCard.forEach(function(newFivedaysCard) {
-          newFivedaysCard.style.display = "none";
+          // newFivedaysCard.style.display = "none";
+          newFivedaysCard.remove();
      })
      createThreeHoursCard(forecastObj, 0);
      createFiveDaysCard(forecastObj);
@@ -64,56 +65,59 @@ async function getWeatherAndForecastAPI (city) {
       //Delete default cards
       rangeCard = document.querySelectorAll(".range__card");
       rangeCard.forEach(function(newRangeCard) {
-           newRangeCard.style.display = "none";
+          //  newRangeCard.style.display = "none";
+          newRangeCard.remove();
       })
       fivedaysCard = document.querySelectorAll(".fivedays__card");
       fivedaysCard.forEach(function(newFivedaysCard) {
-           newFivedaysCard.style.display = "none";
+          //  newFivedaysCard.style.display = "none";
+          newFivedaysCard.remove();
       })
-     
         defaultCity = firstName;
         getWeatherAndForecastAPI (defaultCity);
       
    }) //end of addEventListener for search button
 
     //Switch 3hr forecast by clicking 5 days cards
-    for (let k =0; k < fivedaysCard.length; k++) {
-      fivedaysCard[k].addEventListener("click", switchWeather);
+    fivedaysCard = document.querySelectorAll(".fivedays__card");
+    fivedaysCard.forEach(function(card, index){
 
+      card.addEventListener("click", switchWeather);
+  
       function switchWeather () {
-        if (k === 0) {
-          rangeCard = document.querySelectorAll(".range__card");
-              rangeCard.forEach(function(card){
-                card.style.display = "none";
-              })
-              createThreeHoursCard(forecastObj, 0);
-        } else if (k === 1) {
+        if (index === 0) {
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
-            card.style.display = "none";
+                    card.remove();
           })
+            createThreeHoursCard(forecastObj, 0);
+        } else if (index === 1) {
+          rangeCard = document.querySelectorAll(".range__card");
+          rangeCard.forEach(function(card){
+                    card.remove();
+                  })
             createThreeHoursCard(forecastObj, 8);
-        } else if (k === 2) {
+        } else if (index === 2) {
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
-            card.style.display = "none";
-          })
-              createThreeHoursCard(forecastObj, 16);
-        } else if (k === 3) {
+                    card.remove();
+                  })
+             createThreeHoursCard(forecastObj, 16);
+        } else if (index === 3) {
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
-            card.style.display = "none";
-          })
-              createThreeHoursCard(forecastObj, 24);
-        } else if (k === 4) {
+                    card.remove();
+                  })
+             createThreeHoursCard(forecastObj, 24);
+        } else if (index === 4) {
           rangeCard = document.querySelectorAll(".range__card");
           rangeCard.forEach(function(card){
-            card.style.display = "none";
-          })
-            createThreeHoursCard(forecastObj, 32);
+                    card.remove();
+                  })
+             createThreeHoursCard(forecastObj, 32);
         }
-        }
-    } //end of for loop for switching card
+      }
+    })//end of function for switching card
   } catch(error) {
     console.log("Error ", error);
   }
