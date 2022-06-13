@@ -179,8 +179,8 @@ window.addEventListener("DOMContentLoaded", ()=>{
     console.log(newArray);
     let newData = JSON.stringify(newArray);
     localStorage.setItem(key, newData);
-    document.getElementById(name).remove();
     createDropDown(newArray);
+    document.getElementById(name).remove();
     value = "";
   }
 
