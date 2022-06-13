@@ -1,7 +1,7 @@
 // import apiKeyMeg from "./forecast.js";
 import nicolasApi from "./nicolasAPIkey.js";
-import value from "./search.js"
-(console.log(value));
+// import value from "./search.js"
+// (console.log(value));
 import parsed from "./search.js" //Get name of favorite cities array
 
 //Variable
@@ -224,7 +224,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
        const selected = e.target.selectedIndex;
       //  console.log(selectTag);
        value = e.target.children[selected].id;
-       console.log(value);
+      //  console.log(value);
        getWeatherAndForecastAPI(value);
    })
 });

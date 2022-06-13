@@ -1,6 +1,15 @@
 import nicolasApi from "./nicolasAPIkey.js";
 import parsed from "./search.js";
 
+let initialCity;
+if(parsed === null){
+  initialCity = "vancouver"
+}else if (parsed.length >= 1){
+  initialCity = parsed[0]
+}
+// console.log(initialCity);
+console.log(parsed);
+
 export const loadData = () => {
   const element = document.querySelector("#currentWeather");
   return (element.innerHTML = `
@@ -15,7 +24,7 @@ export const loadData = () => {
 };
 
 // Fetching API
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=vancouver&appid=${nicolasApi}&units=metric`)
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=${initialCity}&appid=${nicolasApi}&units=metric`)
 
 .then((response) => response.json())
 
