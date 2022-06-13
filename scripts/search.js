@@ -143,6 +143,10 @@ window.addEventListener("DOMContentLoaded", ()=>{
       let parsedStorage = JSON.parse(existArrayInStorage);
       console.log(parsedStorage);
       console.log(cityName);
+
+      if (parsedStorage === null) {
+        parsedStorage = [];
+      }
       if (parsedStorage.includes(cityName)) {
         alert(`You've already got this city`);
         searchBox.value = "";
@@ -150,9 +154,6 @@ window.addEventListener("DOMContentLoaded", ()=>{
       }
 
       console.log(parsedStorage);
-      if (parsedStorage === null) {
-        parsedStorage = [];
-      }
       parsedStorage.push(cityName);
       console.log(parsedStorage);
       let json = JSON.stringify(parsedStorage);
