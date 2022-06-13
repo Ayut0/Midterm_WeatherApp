@@ -1,7 +1,4 @@
-// import apiKeyMeg from "./forecast.js";
 import nicolasApi from "./nicolasAPIkey.js";
-// import value from "./search.js"
-// (console.log(value));
 import parsed from "./search.js" //Get name of favorite cities array
 
 //Variable
@@ -19,8 +16,8 @@ async function getWeatherAndForecastAPI (city) {
     const responseWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${nicolasApi}&units=metric`);
     const currentWeatherObj = await responseWeather.json();
    
-    lat = currentWeatherObj.coord.lat; //49.2497 (default val: Vancouver)
-    lon = currentWeatherObj.coord.lon; //-123.1193 (default val: Vancouver)
+    lat = currentWeatherObj.coord.lat;
+    lon = currentWeatherObj.coord.lon; 
     
     //Fetch Forecast API
     const responseForecast = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${nicolasApi}&units=metric`);
@@ -37,12 +34,10 @@ async function getWeatherAndForecastAPI (city) {
       //Delete default cards
      rangeCard = document.querySelectorAll(".range__card");
      rangeCard.forEach(function(newRangeCard) {
-          // newRangeCard.style.display = "none";
           newRangeCard.remove();
      })
      fivedaysCard = document.querySelectorAll(".fivedays__card");
      fivedaysCard.forEach(function(newFivedaysCard) {
-          // newFivedaysCard.style.display = "none";
           newFivedaysCard.remove();
      })
      createThreeHoursCard(forecastObj, 0);
@@ -65,12 +60,10 @@ async function getWeatherAndForecastAPI (city) {
       //Delete default cards
       rangeCard = document.querySelectorAll(".range__card");
       rangeCard.forEach(function(newRangeCard) {
-          //  newRangeCard.style.display = "none";
           newRangeCard.remove();
       })
       fivedaysCard = document.querySelectorAll(".fivedays__card");
       fivedaysCard.forEach(function(newFivedaysCard) {
-          //  newFivedaysCard.style.display = "none";
           newFivedaysCard.remove();
       })
         defaultCity = firstName;
@@ -125,15 +118,14 @@ async function getWeatherAndForecastAPI (city) {
 
 getWeatherAndForecastAPI(defaultCity);
 
-
 //Function for 3hours Forecast
 const createThreeHoursCard = function(obj, num) {
   let rangeDIV = document.querySelector(".range");
     for (let i = 0+num; i < 8+num; i++) {
       //Variables (for time)
-      let hr = obj.list[i].dt_txt[11];  //[2022-06-XX 18:00:00] grab hour of tens place(for this e.g. = 1)
-      let hr2 = obj.list[i].dt_txt[12]; //[2022-06-XX 18:00:00] grab hour of ones place(for this e.g. = 8)
-      let hh = hr + hr2; //Concatenate two letters (for this e.g. "1" + "8" = "18")
+      let hr = obj.list[i].dt_txt[11];  
+      let hr2 = obj.list[i].dt_txt[12]; 
+      let hh = hr + hr2; 
       
       //Variables (for date)
       let monthOfTens = obj.list[i].dt_txt[5];
@@ -144,7 +136,7 @@ const createThreeHoursCard = function(obj, num) {
       let dd = dateOfTens + dateOfOnes;
 
       //Variables (for temp)
-      let tempInt = Math.floor(obj.list[i].main.temp); //Make temp. integer
+      let tempInt = Math.floor(obj.list[i].main.temp); 
       
       if (hr === "0") {
       //AM
@@ -217,15 +209,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
   event.preventDefault()
   //Event for favorite
   let selectTag = document.querySelector("select");
-  // let options = document.querySelectorAll("option");
 
   let value = parsed.length === 1 ? parsed[0] : "";
   selectTag.addEventListener("change", function(e) {
        faveCounter++;
        const selected = e.target.selectedIndex;
-      //  console.log(selectTag);
        value = e.target.children[selected].innerHTML;
-      //  console.log(value);
        getWeatherAndForecastAPI(value);
    })
 });
